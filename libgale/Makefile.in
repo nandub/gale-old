@@ -1,0 +1,596 @@
+# Makefile.in generated automatically by automake 1.4-p4 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+CFLAGS_NOWARN = @CFLAGS_NOWARN@
+DLLTOOL = @DLLTOOL@
+DL_LIBS = @DL_LIBS@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
+GALE_LIBS = @GALE_LIBS@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAINT = @MAINT@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+PROG_LDCONFIG = @PROG_LDCONFIG@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+YACC = @YACC@
+ZEPHYR_LIBS = @ZEPHYR_LIBS@
+
+lib_LTLIBRARIES = libgale.la
+noinst_PROGRAMS = crypto_test key_test
+
+# version:revision:age
+# current as of 0.99fruit
+libgale_la_LDFLAGS = -version-info 14:0:0
+
+noinst_HEADERS = client_i.h crypto_i.h key_i.h io.h
+
+libgale_la_SOURCES =      core_init.c core_link.c core_signals.c     io_input.c io_output.c     client_alias.c client_code.c client_default.c client_i.c client_location.c     client_pack.c client_queue.c client_server.c client_standard.c     client_unpack.c     crypto_gen.c crypto_i.c crypto_misc.c crypto_seal.c     crypto_sign.c crypto_sign_raw.c     key_assert.c key_generate.c key_graph.c key_handle.c key_i.c     key_search.c key_search_akd.c key_search_builtin.c key_search_dirs.c     misc_alloc.c misc_charset.c misc_connect.c misc_debug.c     misc_dir.c misc_envvar.c misc_error.c misc_exec.c misc_file.c     misc_fragment.c misc_globals.c misc_kill.c misc_map.c misc_pack.c     misc_readline.c misc_report.c misc_terminal.c misc_text.c misc_time.c     wcwidth.c
+
+
+crypto_test_SOURCES = crypto_test.c
+crypto_test_LDADD = $(GALE_LIBS)
+
+key_test_SOURCES = key_test.c
+key_test_LDADD = $(GALE_LIBS)
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = ../include/gale/config.h
+CONFIG_CLEAN_FILES = 
+LTLIBRARIES =  $(lib_LTLIBRARIES)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I../include/gale
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+libgale_la_LIBADD = 
+libgale_la_OBJECTS =  core_init.lo core_link.lo core_signals.lo \
+io_input.lo io_output.lo client_alias.lo client_code.lo \
+client_default.lo client_i.lo client_location.lo client_pack.lo \
+client_queue.lo client_server.lo client_standard.lo client_unpack.lo \
+crypto_gen.lo crypto_i.lo crypto_misc.lo crypto_seal.lo crypto_sign.lo \
+crypto_sign_raw.lo key_assert.lo key_generate.lo key_graph.lo \
+key_handle.lo key_i.lo key_search.lo key_search_akd.lo \
+key_search_builtin.lo key_search_dirs.lo misc_alloc.lo misc_charset.lo \
+misc_connect.lo misc_debug.lo misc_dir.lo misc_envvar.lo misc_error.lo \
+misc_exec.lo misc_file.lo misc_fragment.lo misc_globals.lo misc_kill.lo \
+misc_map.lo misc_pack.lo misc_readline.lo misc_report.lo \
+misc_terminal.lo misc_text.lo misc_time.lo wcwidth.lo
+noinst_PROGRAMS =  crypto_test$(EXEEXT) key_test$(EXEEXT)
+PROGRAMS =  $(noinst_PROGRAMS)
+
+crypto_test_OBJECTS =  crypto_test.$(OBJEXT)
+crypto_test_DEPENDENCIES = 
+crypto_test_LDFLAGS = 
+key_test_OBJECTS =  key_test.$(OBJEXT)
+key_test_DEPENDENCIES = 
+key_test_LDFLAGS = 
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
+HEADERS =  $(noinst_HEADERS)
+
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP_ENV = --best
+SOURCES = $(libgale_la_SOURCES) $(crypto_test_SOURCES) $(key_test_SOURCES)
+OBJECTS = $(libgale_la_OBJECTS) $(crypto_test_OBJECTS) $(key_test_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .lo .o .obj .s
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.ac $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps libgale/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-libLTLIBRARIES:
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+
+distclean-libLTLIBRARIES:
+
+maintainer-clean-libLTLIBRARIES:
+
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo "$(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  $(LIBTOOL)  --mode=uninstall rm -f $(DESTDIR)$(libdir)/$$p; \
+	done
+
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libgale.la: $(libgale_la_OBJECTS) $(libgale_la_DEPENDENCIES)
+	$(LINK) -rpath $(libdir) $(libgale_la_LDFLAGS) $(libgale_la_OBJECTS) $(libgale_la_LIBADD) $(LIBS)
+
+mostlyclean-noinstPROGRAMS:
+
+clean-noinstPROGRAMS:
+	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+
+distclean-noinstPROGRAMS:
+
+maintainer-clean-noinstPROGRAMS:
+
+crypto_test$(EXEEXT): $(crypto_test_OBJECTS) $(crypto_test_DEPENDENCIES)
+	@rm -f crypto_test$(EXEEXT)
+	$(LINK) $(crypto_test_LDFLAGS) $(crypto_test_OBJECTS) $(crypto_test_LDADD) $(LIBS)
+
+key_test$(EXEEXT): $(key_test_OBJECTS) $(key_test_DEPENDENCIES)
+	@rm -f key_test$(EXEEXT)
+	$(LINK) $(key_test_LDFLAGS) $(key_test_OBJECTS) $(key_test_LDADD) $(LIBS)
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = libgale
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+client_alias.lo client_alias.o : client_alias.c ../include/gale/client.h \
+	../include/gale/core.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/globals.h client_i.h ../include/gale/key.h
+client_code.lo client_code.o : client_code.c ../include/gale/client.h \
+	../include/gale/core.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../liboop/oop.h ../include/gale/misc.h client_i.h \
+	../include/gale/key.h
+client_default.lo client_default.o : client_default.c \
+	../include/gale/client.h ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/crypto.h ../include/gale/key.h
+client_i.lo client_i.o : client_i.c client_i.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/key.h ../include/gale/client.h
+client_location.lo client_location.o : client_location.c client_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h \
+	key_i.h ../include/gale/client.h
+client_pack.lo client_pack.o : client_pack.c ../include/gale/client.h \
+	../include/gale/core.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../liboop/oop.h ../include/gale/misc.h ../include/gale/key.h \
+	../include/gale/crypto.h client_i.h
+client_queue.lo client_queue.o : client_queue.c ../include/gale/client.h \
+	../include/gale/core.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/globals.h
+client_server.lo client_server.o : client_server.c ../include/gale/all.h \
+	../include/gale/client.h ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/crypto.h ../include/gale/globals.h \
+	../include/gale/key.h
+client_standard.lo client_standard.o : client_standard.c \
+	../include/gale/client.h ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/globals.h
+client_unpack.lo client_unpack.o : client_unpack.c \
+	../include/gale/client.h ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/key.h ../include/gale/crypto.h client_i.h
+core_init.lo core_init.o : core_init.c ../liboop/oop.h key_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../include/gale/key.h \
+	../include/gale/all.h ../include/gale/client.h \
+	../include/gale/crypto.h ../include/gale/globals.h
+core_link.lo core_link.o : core_link.c ../include/gale/globals.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/misc.h \
+	../include/gale/core.h ../liboop/oop.h io.h
+core_signals.lo core_signals.o : core_signals.c ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/globals.h
+crypto_gen.lo crypto_gen.o : crypto_gen.c crypto_i.h \
+	../include/gale/crypto.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+crypto_i.lo crypto_i.o : crypto_i.c crypto_i.h ../include/gale/crypto.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h
+crypto_misc.lo crypto_misc.o : crypto_misc.c crypto_i.h \
+	../include/gale/crypto.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+crypto_seal.lo crypto_seal.o : crypto_seal.c key_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h \
+	crypto_i.h ../include/gale/crypto.h
+crypto_sign.lo crypto_sign.o : crypto_sign.c key_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h \
+	crypto_i.h ../include/gale/crypto.h
+crypto_sign_raw.lo crypto_sign_raw.o : crypto_sign_raw.c crypto_i.h \
+	../include/gale/crypto.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+crypto_test.o: crypto_test.c ../include/gale/crypto.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h
+io_input.lo io_input.o : io_input.c io.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/misc.h ../include/gale/core.h ../liboop/oop.h
+io_output.lo io_output.o : io_output.c io.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/misc.h ../include/gale/core.h ../liboop/oop.h
+key_assert.lo key_assert.o : key_assert.c key_i.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/key.h ../include/gale/crypto.h
+key_generate.lo key_generate.o : key_generate.c ../include/gale/key.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/crypto.h \
+	key_i.h
+key_graph.lo key_graph.o : key_graph.c key_i.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/key.h
+key_handle.lo key_handle.o : key_handle.c ../include/gale/key.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h key_i.h
+key_i.lo key_i.o : key_i.c key_i.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/key.h crypto_i.h ../include/gale/crypto.h
+key_search.lo key_search.o : key_search.c key_i.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/key.h
+key_search_akd.lo key_search_akd.o : key_search_akd.c key_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h \
+	../include/gale/crypto.h ../include/gale/client.h
+key_search_builtin.lo key_search_builtin.o : key_search_builtin.c \
+	key_i.h ../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h
+key_search_dirs.lo key_search_dirs.o : key_search_dirs.c key_i.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/key.h \
+	../include/gale/globals.h
+key_test.o: key_test.c ../include/gale/key.h ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	key_i.h
+misc_alloc.lo misc_alloc.o : misc_alloc.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_charset.lo misc_charset.o : misc_charset.c \
+	../include/gale/globals.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/misc.h ../include/gale/core.h ../liboop/oop.h
+misc_connect.lo misc_connect.o : misc_connect.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h ../liboop/oop-adns.h
+misc_debug.lo misc_debug.o : misc_debug.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_dir.lo misc_dir.o : misc_dir.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_envvar.lo misc_envvar.o : misc_envvar.c ../include/gale/core.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../liboop/oop.h ../include/gale/misc.h \
+	../include/gale/globals.h
+misc_error.lo misc_error.o : misc_error.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_exec.lo misc_exec.o : misc_exec.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_file.lo misc_file.o : misc_file.c ../include/gale/crypto.h \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_fragment.lo misc_fragment.o : misc_fragment.c \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h ../include/gale/crypto.h
+misc_globals.lo misc_globals.o : misc_globals.c \
+	../include/gale/globals.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/misc.h ../include/gale/core.h ../liboop/oop.h
+misc_kill.lo misc_kill.o : misc_kill.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_map.lo misc_map.o : misc_map.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+misc_pack.lo misc_pack.o : misc_pack.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+misc_readline.lo misc_readline.o : misc_readline.c \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_report.lo misc_report.o : misc_report.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+misc_terminal.lo misc_terminal.o : misc_terminal.c \
+	../include/gale/misc.h ../include/gale/types.h \
+	../include/gale/compat.h ../include/gale/config.h \
+	../include/gale/core.h ../liboop/oop.h \
+	../include/gale/globals.h
+misc_text.lo misc_text.o : misc_text.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+misc_time.lo misc_time.o : misc_time.c ../include/gale/misc.h \
+	../include/gale/types.h ../include/gale/compat.h \
+	../include/gale/config.h ../include/gale/core.h ../liboop/oop.h
+wcwidth.lo wcwidth.o : wcwidth.c ../include/gale/compat.h \
+	../include/gale/config.h
+
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+install-exec-am: install-libLTLIBRARIES
+install-exec: install-exec-am
+
+install-data-am:
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am: uninstall-libLTLIBRARIES
+uninstall: uninstall-am
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS)
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+	$(mkinstalldirs)  $(DESTDIR)$(libdir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-libLTLIBRARIES mostlyclean-compile \
+		mostlyclean-libtool mostlyclean-noinstPROGRAMS \
+		mostlyclean-tags mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-libLTLIBRARIES clean-compile clean-libtool \
+		clean-noinstPROGRAMS clean-tags clean-generic \
+		mostlyclean-am
+
+clean: clean-am
+
+distclean-am:  distclean-libLTLIBRARIES distclean-compile \
+		distclean-libtool distclean-noinstPROGRAMS \
+		distclean-tags distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+
+maintainer-clean-am:  maintainer-clean-libLTLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-noinstPROGRAMS maintainer-clean-tags \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+
+.PHONY: mostlyclean-libLTLIBRARIES distclean-libLTLIBRARIES \
+clean-libLTLIBRARIES maintainer-clean-libLTLIBRARIES \
+uninstall-libLTLIBRARIES install-libLTLIBRARIES mostlyclean-compile \
+distclean-compile clean-compile maintainer-clean-compile \
+mostlyclean-libtool distclean-libtool clean-libtool \
+maintainer-clean-libtool mostlyclean-noinstPROGRAMS \
+distclean-noinstPROGRAMS clean-noinstPROGRAMS \
+maintainer-clean-noinstPROGRAMS tags mostlyclean-tags distclean-tags \
+clean-tags maintainer-clean-tags distdir info-am info dvi-am dvi check \
+check-am installcheck-am installcheck install-exec-am install-exec \
+install-data-am install-data install-am install uninstall-am uninstall \
+all-redirect all-am all installdirs mostlyclean-generic \
+distclean-generic clean-generic maintainer-clean-generic clean \
+mostlyclean distclean maintainer-clean
+
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

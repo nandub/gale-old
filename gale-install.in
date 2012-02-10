@@ -1,0 +1,313 @@
+#!/bin/sh
+# @configure_input@
+
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+sysconfdir="@sysconfdir@"
+sbindir="@sbindir@"
+bindir="@bindir@"
+srcdir="@srcdir@"
+
+copy() {
+	echo "$*"
+	"$@"
+}
+
+run() {
+	copy "$@" || exit 1
+}
+
+qgrep() {
+	grep "$@" > /dev/null
+}
+
+testkey() {
+	gkinfo -kx "$1" 2>/dev/null | qgrep "^Public key: <$1>"
+}
+
+testkey_stdin() {
+	gkinfo -x 2>/dev/null | qgrep "^Public key: <$1>"
+}
+
+if [ -n "$GALE_SYS_DIR" ]; then
+	SYS_DIR="$GALE_SYS_DIR"
+elif [ -n "$sysconfdir" ]; then
+	SYS_DIR="$sysconfdir/gale"
+else
+	echo "Error: cannot locate Gale system configuration directory."
+	exit 1
+fi
+
+CONF="$SYS_DIR/conf"
+umask 022
+PATH="$bindir:$sbindir:$PATH:/usr/ucb"
+export PATH
+
+if [ -f "$CONF" ]; then
+	exec 3<"$CONF"
+
+	while read var value <&3 ; do
+		case "$var" in
+		"") continue ;;
+		"#") continue ;;
+		"#"*) continue ;;
+		esac
+		eval "CONF_$var=\"$value\""
+	done
+
+	exec 3<&-
+fi
+
+USER="`whoami`"
+if [ -z "$USER" ]; then
+	echo "Error: cannot determine your username."
+	exit 1
+fi
+
+# -----------------------------------------------------------------------------
+# check directory structure
+
+if [ ! -d "$SYS_DIR" ]; then
+	echo "Error: Invalid SYS_DIR: \"$SYS_DIR\"."
+	exit 1
+fi
+
+# -----------------------------------------------------------------------------
+# get settings for important variables: user, domain, server
+
+[ -n "$CONF_GALE_USER" ] && GALE_USER="$CONF_GALE_USER"
+[ -n "$CONF_GALE_DOMAIN" ] && GALE_DOMAIN="$CONF_GALE_DOMAIN"
+[ -n "$CONF_GALE_SERVER" ] && GALE_SERVER="$CONF_GALE_SERVER"
+
+if [ -z "$GALE_USER" ]; then
+cat << EOM
+
+Hi.  You need to denote a user to own the Gale domain secret key.  You must
+trust this user with Gale authentication for your domain; the "gksign" program
+will run as this user.  I recommend using a special "gale" user; if you don't
+have administrative privileges here, you'll probably have to use your own
+account.  I do not recommend the use of "root".
+
+No harm done if you stop this script now to set up such a user.
+
+EOM
+
+	printf "Enter the Gale username: "
+	read GALE_USER
+	if [ -z "$GALE_USER" ]; then
+		echo "Error: Invalid username or no home dir: \"$GALE_USER\"."
+		exit 1
+	fi
+else
+	echo "Using \"$GALE_USER\" as the Gale owner."
+fi
+
+if [ -z "$GALE_DOMAIN" ] ; then
+cat << EOM
+
+You need to identify the name of your Gale domain for two purposes:
+
+1. Your domain name identifies the hostname of your Gale server.  If your 
+domain name is "mydomain.example.com", then a server ("galed") must run on one 
+or more of the following hosts:
+
+   mydomain.example.com
+   gale.mydomain.example.com
+   mydomain.example.com.gale.org
+
+2. Your domain name is used as the basis for authority in the Gale public key
+infrastructure.  Note that you will need permission from your parent domain;
+if you choose "mydomain.example.com", you will need to contact the owners of
+"example.com".
+
+If you run Gale in the context of a larger organization, they may have a domain 
+set up; ask your administrators.
+
+For most of the top-level domains, contact <mailto:egnor-gale@ofb.net>.
+
+EOM
+
+	printf "Enter your Gale domain: "
+	read GALE_DOMAIN
+	case "$GALE_DOMAIN" in
+		*" "*) echo "Error: Invalid domain specification." ; exit 1 ;;
+		*""*) echo "Error: Invalid domain specification." ; exit 1 ;;
+		*""*) echo "Error: Invalid domain specification." ; exit 1 ;;
+		"") echo "Error: No domain specified." ; exit 1 ;;
+	esac
+else
+	echo "Using \"$GALE_DOMAIN\" as the Gale domain."
+fi
+
+# -----------------------------------------------------------------------------
+# create configuration file
+
+if [ ! -f "$CONF" ]; then
+cat > "$CONF" <<EOM
+# $CONF -- created by Gale installer; edit to suit.
+EOM
+
+cat <<EOM
+
+*** Creating "$CONF".
+Examine and edit this file to your taste and local needs.
+If you want to recreate it from scratch, remove it and re-run this.
+EOM
+fi
+
+[ -n "$CONF_GALE_USER" ] || cat >> "$CONF" <<EOM
+
+# The user who owns the domain secret key.  (Used in installation and upgrade)
+GALE_USER $GALE_USER
+EOM
+
+[ -n "$CONF_GALE_DOMAIN" ] || cat >> "$CONF" << EOM
+
+# The authentication domain to use.  (Mandatory)
+GALE_DOMAIN $GALE_DOMAIN
+EOM
+
+# -----------------------------------------------------------------------------
+# make gksign setuid
+
+echo ""
+if copy chown "$GALE_USER" "$sbindir/gksign" ; then
+	:
+else
+	echo "*** We need to chown $GALE_USER '$sbindir/gksign'."
+	echo "    Please run this script as a user that can do so,"
+	echo "    or do so yourself and re-run this script."
+	exit 1
+fi
+run chmod 4755 "$sbindir/gksign"
+
+# -----------------------------------------------------------------------------
+# create a domain, if necessary
+
+echo ""
+if test -u "$sbindir/gksign" || copy chmod u+s "$sbindir/gksign" ; then
+	:
+else
+	echo "*** We need to chmod u+s '$sbindir/gksign'."
+	echo "    Please run this script as a user that can do so,"
+	echo "    or do so yourself and re-run this script."
+	exit 1
+fi
+
+testkey "$GALE_DOMAIN" && exit 0
+echo "*** You lack a signed key for your domain, \"$GALE_DOMAIN\"."
+
+if [ "x$GALE_USER" != "x$USER" ]; then
+cat <<EOM
+Become user "$GALE_USER" (you are now "$USER") and run this script again
+to create a new domain; contact your domain administrator if you wish to 
+become part of an existing domain.
+EOM
+	exit 1
+fi
+
+if [ -z "$HOME" ]; then
+	cd
+	HOME="`pwd`"
+	echo "Warning: \$HOME not set, assuming \"$HOME\"."
+fi
+
+GALE="$HOME/.gale"
+mkdir -p "$GALE"
+if [ ! -w "$GALE" ]; then
+	echo "Error: Cannot create \"$GALE\"."
+	exit 1
+fi
+
+unsigned="$GALE/$GALE_DOMAIN.unsigned"
+signer="`echo "$GALE_DOMAIN" | sed 's%^[^.@:/]*[.@:/]%%'`"
+[ -z "$signer" ] && signer="ROOT"
+
+if [ -f "$unsigned" ]; then
+
+cat << EOM
+
+Okay, so we've already been here.  Last time, I created the file
+"$unsigned" for you to have signed.
+
+If you've done so, great!  I just need the filename of the signed key
+they gave you back.  Otherwise, interrupt this script, remove the 
+file mentioned above, and run this again.
+
+EOM
+
+	printf "Enter the signed key filename: "
+	read skey
+
+	if [ ! -f "$skey" ]; then
+		echo "Error: I can't find \"$skey\"."
+		exit 1
+	fi
+
+	if gkinfo -tx < "$skey" | qgrep "^Public key: <$GALE_DOMAIN>"; then
+		echo "Good, it looks like your key..."
+	else
+		echo "Error: \"$skey\" not for \"$GALE_DOMAIN\"."
+		echo "Here's what it looks like to me:"
+		gkinfo -x < "$skey"
+		exit 1
+	fi
+
+	if testkey_stdin "$GALE_DOMAIN" < "$skey" ; then
+		echo "And it looks properly signed.  Hooray for you!"
+	else
+		echo "Error: \"$skey\" is not fully signed."
+		echo "Here's what it looks like to me:"
+		gkinfo < "$skey"
+		exit 1
+	fi
+
+	if cp "$skey" "$SYS_DIR/auth/local/$GALE_DOMAIN.gpub" ; then
+		chmod a+r "$SYS_DIR/auth/local/$GALE_DOMAIN.gpub"
+		echo "Signed key successfully installed."
+	else
+		echo "Error: copying \"$skey\" to \"$SYS_DIR/auth/local/$GALE_DOMAIN\"."
+		exit 1
+	fi
+
+cat << EOM
+
+The domain should be properly configured now.  Assuming users can access a
+version of "gksign" setuid to "$GALE_USER" (this user), they should be
+able to start running clients and generating IDs for themselves.
+
+The installation process is complete!
+
+EOM
+
+	exit 0
+fi
+
+cat << EOM
+
+Preparing to make a key for "$GALE_DOMAIN".  (^C now to stop.)
+Please enter a description to go along with the key; for example, 
+caltech.edu has the description "California Institute of Technology".
+
+EOM
+
+printf "Enter the description: "
+read descr
+
+echo "We will generate the key now.  Have patience."
+gkgen -r "$GALE/auth/private/$GALE_DOMAIN.gpri" \
+      -u "$unsigned" "$GALE_DOMAIN" /"$descr" || exit 1
+
+cat << EOM
+
+*** What you must do: Take the file "$unsigned",
+which contains the public part of the newly-generated key pair.  Send it to
+the owner of the "$signer" domain through appropriate means.
+Take care to preseve the file's binary data; you may need to uuencode it.
+
+Assuming they trust you with your subdomain, they should pass the key through
+"gksign" as a filter, returning the signed output to you.  When you have this
+signed key file available, re-run this script, and we will move on to the
+next step.
+
+EOM

@@ -1,0 +1,86 @@
+#!/bin/sh
+# @configure_input@
+# Shamelessly ripped off from gtk-config.
+
+usage="\
+Usage: gale-config [-a] [--version] [--prefix] [--exec-prefix] [--incs] [--libs]
+This software comes with ABSOLUTELY NO WARRANTY.  You may redistribute
+it under certain conditions.  Run \"gale-config --license\" for information."
+
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+sysconfdir="@sysconfdir@"
+version="@VERSION@"
+
+top_builddir='IGNORE'
+top_srcdir='IGNORE'
+
+linkflags='-lgale -lgc -loop-adns -loop'
+for flag in @LDFLAGS@ @GALE_LIBS@ @LIBS@ ; do
+  case " $linkflags " in
+    *" $flag "*) ;; # remove duplicates
+    *) case "$flag/" in
+         -LIGNORE/*) ;; # remove references to the source directory
+           IGNORE/*) ;;
+         -L/usr/lib/) ;; # implied
+         -L*) linkflags="$flag $linkflags" ;;
+         *) linkflags="$linkflags $flag" ;;
+       esac ;;
+  esac
+done
+
+compileflags=''
+for flag in @CPPFLAGS@ @DEFS@ ; do
+  case " $compileflags " in
+    *" $flag "*) ;; # remove duplicates
+    *) case "$flag/" in
+         -IIGNORE/*) ;; # remove references to the source directory
+         -I/usr/include/) ;; # implied
+         -DHAVE_CONFIG_H/) ;;
+         -DGALE_SYS_DIR=*) ;;
+         *) test -n "$compileflags" &&
+            compileflags="$compileflags $flag" ||
+            compileflags="$flag" ;;
+       esac
+  esac
+done
+
+if test $# -eq 0; then
+  echo "$usage" 1>&2
+  exit 1
+fi
+
+while test $# -gt 0; do
+  case $1 in
+    -a)
+      echo "gale_prefix='$prefix'"
+      echo "gale_exec_prefix='$exec_prefix'"
+      echo "gale_version='$version'"
+      echo "gale_incs='$compileflags'"
+      echo "gale_libs='$linkflags'"
+      ;;
+    --prefix)
+      echo "$prefix"
+      ;;
+    --exec-prefix)
+      echo "$exec_prefix"
+      ;;
+    --version)
+      echo "$version"
+      ;;
+    --incs)
+      echo "$compileflags"
+      ;;
+    --libs)
+      echo "$linkflags"
+      ;;
+    --license)
+      more "${sysconfdir}/gale/COPYING"
+      ;;
+    *)
+      echo "$usage" 1>&2
+      exit 1
+      ;;
+  esac
+  shift
+done
