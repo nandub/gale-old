@@ -2,7 +2,7 @@
 #include "gale/core.h"
 #include "gale/globals.h"
 
-/* #define CHEESY_ALLOC */
+#define CHEESY_ALLOC
 /* #define GC_DEBUG */
 
 #include <stdlib.h>
