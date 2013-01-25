@@ -4,7 +4,7 @@ config.status
 libtool
 config.log
 config.h
-stamp-h
+stamp-h1
 *.o
 *.lo
 *.la
@@ -16,3 +16,7 @@ kutils/gk*
 libgale/*_test
 liboop/test-*
 server/galed
+.deps
+ar-lib
+autom4te.cache
+config.h.in~

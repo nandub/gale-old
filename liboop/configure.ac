@@ -1,6 +1,10 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(INSTALL)
-AM_INIT_AUTOMAKE(liboop,0.9)
+AC_INIT(liboop,0.9)
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AC_CONFIG_MACRO_DIR([m4])
+# automake 1.12 seems to require this, but automake 1.11 doesn't recognize it
+m4_pattern_allow([AM_PROG_AR])
+AM_PROG_AR
 AC_CANONICAL_HOST
 
 dnl Use libtool for shared libraries

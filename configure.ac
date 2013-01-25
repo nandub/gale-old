@@ -1,10 +1,14 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.13)
-AC_INIT(INSTALL)
-AM_INIT_AUTOMAKE(gale,0.99fruit)
-AM_CONFIG_HEADER(include/gale/config.h:config.h.in)
+AC_PREREQ(2.69)
+AC_INIT(gale,0.99fruit)
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AC_CONFIG_HEADERS(include/gale/config.h:config.h.in)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
+# automake 1.12 seems to require this, but automake 1.11 doesn't recognize it
+m4_pattern_allow([AM_PROG_AR])
+AM_PROG_AR
 AC_PROG_CC
 AM_PROG_LIBTOOL
 AM_MAINTAINER_MODE

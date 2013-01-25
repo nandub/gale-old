@@ -3,7 +3,6 @@
 cd "`dirname $0`" &&
 	libtoolize --copy --force &&
 	aclocal &&
-        autoheader &&
+#        autoheader &&
 	automake --add-missing &&
-	autoconf &&
-cd liboop && ./bootstrap
+	autoconf

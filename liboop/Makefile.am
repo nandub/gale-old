@@ -7,8 +7,9 @@
 # See the file COPYING for details.
 
 AUTOMAKE_OPTIONS = foreign 1.2
+ACLOCAL_AMFLAGS=-I m4
 lib_LTLIBRARIES = liboop-adns.la liboop-glib.la liboop-tcl.la liboop-www.la liboop-rl.la liboop.la
-INCLUDES = $(GLIB_INCLUDES) $(TCL_INCLUDES) $(WWW_INCLUDES)
+AM_CPPFLAGS = $(GLIB_INCLUDES) $(TCL_INCLUDES) $(WWW_INCLUDES)
 
 # versions updated as of 0.8
 liboop_la_LDFLAGS = -version-info 4:0:0 # version:revision:age
