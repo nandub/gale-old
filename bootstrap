@@ -1,9 +1,13 @@
 #!/bin/sh -x
 
 cd "`dirname $0`" &&
-	libtoolize --copy --force &&
-	aclocal &&
-        autoheader &&
-	automake --add-missing &&
-	autoconf &&
+  if which libtoolize 2> /dev/null; then 
+    libtoolize --copy --force
+  else
+    glibtoolize --copy --force
+  fi
+  aclocal &&
+  autoheader &&
+  automake --add-missing &&
+  autoconf &&
 cd liboop && ./bootstrap

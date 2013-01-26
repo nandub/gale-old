@@ -20,3 +20,4 @@ server/galed
 ar-lib
 autom4te.cache
 config.h.in~
+depcomp
