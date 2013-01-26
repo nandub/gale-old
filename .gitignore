@@ -21,3 +21,6 @@ ar-lib
 autom4te.cache
 config.h.in~
 depcomp
+Makefile
+Makefile.in
+configure
