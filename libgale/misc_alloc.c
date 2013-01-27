@@ -39,7 +39,7 @@ static inline void init() {
 static inline void init() { }
 #endif
 
-void *gale_malloc(size_t len) { init(); return GC_MALLOC(len); }
+void *gale_malloc(size_t len) { init(); GC_INIT(); return GC_MALLOC(len); }
 void *gale_malloc_atomic(size_t len) { init(); return GC_MALLOC_ATOMIC(len); }
 void *gale_malloc_safe(size_t len) { init(); return GC_MALLOC_UNCOLLECTABLE(len); }
 void gale_free(void *ptr) { init(); GC_FREE(ptr); }
